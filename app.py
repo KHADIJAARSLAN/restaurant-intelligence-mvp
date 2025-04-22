@@ -42,12 +42,12 @@ st.subheader("📅 Upcoming Events in Berkeley")
 
 # Ensure dates are parsed correctly
 event_df["Date"] = pd.to_datetime(event_df["Date"])
-today = pd.to_datetime(filtered_inventory["Date"].max())
+today = pd.Timestamp.today()
 
 upcoming_events = event_df[event_df["Date"] > today].sort_values("Date")
 
 if not upcoming_events.empty:
-    for _, row in upcoming_events.head(5).iterrows():
+    for _, row in upcoming_events.head(10).iterrows():
         st.markdown(f"**{row['Event_Name']}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
 else:
     st.info("No upcoming events found after today's date.")
@@ -72,6 +72,7 @@ if query:
             st.error("⚠️ Rate limit reached. Please try again later or check your OpenAI usage.")
         except Exception as e:
             st.error(f"❌ An unexpected error occurred: {e}")
+
 
 
 # Forecast (Simulated for now)
