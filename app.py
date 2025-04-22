@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from openai import OpenAI
+from openai import OpenAI, RateLimitError
 
 # Page setup
 st.set_page_config(page_title="Restaurant Intelligence Platform", layout="wide")
@@ -50,12 +50,17 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 query = st.text_input("Ask a question about your inventory, vendors, or forecasts:")
 if query:
     with st.spinner("Thinking..."):
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You're a helpful restaurant data assistant."},
-                {"role": "user", "content": query}
-            ]
-        )
-        st.success(response.choices[0].message.content)
+        try:
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You're a helpful restaurant data assistant."},
+                    {"role": "user", "content": query}
+                ]
+            )
+            st.success(response.choices[0].message.content)
+        except RateLimitError:
+            st.error("⚠️ Rate limit reached. Please try again later or check your OpenAI usage.")
+        except Exception as e:
+            st.error(f"❌ An unexpected error occurred: {e}")
 
