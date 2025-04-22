@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import openai
+from openai import OpenAI
 
 # Page setup
 st.set_page_config(page_title="Restaurant Intelligence Platform", layout="wide")
@@ -45,17 +45,17 @@ st.dataframe(upcoming_events)
 
 # Chatbot Section
 st.subheader("💬 Ask the Assistant")
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 query = st.text_input("Ask a question about your inventory, vendors, or forecasts:")
 if query:
     with st.spinner("Thinking..."):
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You're a helpful restaurant data assistant."},
                 {"role": "user", "content": query}
             ]
         )
-        answer = response["choices"][0]["message"]["content"]
-        st.success(answer)
+        st.success(response.choices[0].message.content)
+
