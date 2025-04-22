@@ -40,8 +40,9 @@ st.dataframe(vendor_options)
 # Event Alerts
 st.subheader("📅 Upcoming Events in Berkeley")
 today = pd.to_datetime(filtered_inventory["Date"].iloc[-1])
-upcoming_events = event_df[pd.to_datetime(event_df["Date"]) > today].head(5)
-st.dataframe(upcoming_events)
+upcoming_events = event_df[pd.to_datetime(event_df["Date"]) > today].sort_values("Date").head(5)
+for _, row in upcoming_events.iterrows():
+    st.markdown(f"**{row['Event_Name']}** — {row['Date']} *(Impact: {row['Impact_Level']})*")
 
 # Chatbot Section
 st.subheader("💬 Ask the Assistant")
@@ -63,4 +64,3 @@ if query:
             st.error("⚠️ Rate limit reached. Please try again later or check your OpenAI usage.")
         except Exception as e:
             st.error(f"❌ An unexpected error occurred: {e}")
-
