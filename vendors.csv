@@ -1,0 +1,10 @@
+Item,Vendor,Price_per_kg,Reliability_percent
+rice,Vendor A,2.01,94.54
+rice,Vendor B,3.02,93.34
+rice,Vendor C,2.44,90.77
+chicken,Vendor A,2.2,98.01
+chicken,Vendor B,3.16,98.51
+chicken,Vendor C,1.75,95.23
+tomatoes,Vendor A,3.38,87.54
+tomatoes,Vendor B,1.63,95.38
+tomatoes,Vendor C,2.65,96.79
