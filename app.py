@@ -40,13 +40,24 @@ st.dataframe(vendor_options)
 # Event Alerts
 st.subheader("📅 Upcoming Events in Berkeley")
 
+# Debug view to inspect raw event data
+st.write("All events loaded:")
+st.dataframe(event_df)
+
 # Ensure dates are parsed correctly
-event_df["Date"] = pd.to_datetime(event_df["Date"])
+event_df["Date"] = pd.to_datetime(event_df["Date"], errors='coerce')
 today = pd.Timestamp.today()
 
 upcoming_events = event_df[event_df["Date"] > today].sort_values("Date")
 
+st.write("Filtered upcoming events:")
+st.dataframe(upcoming_events)
 
+if not upcoming_events.empty:
+    for _, row in upcoming_events.head(10).iterrows():
+        st.markdown(f"**{row['Event_Name']}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
+else:
+    st.info("No upcoming events found after today's date.")
 
 # Chatbot Section
 st.subheader("💬 Ask the Assistant")
@@ -68,6 +79,7 @@ if query:
             st.error("⚠️ Rate limit reached. Please try again later or check your OpenAI usage.")
         except Exception as e:
             st.error(f"❌ An unexpected error occurred: {e}")
+
 
 
 
