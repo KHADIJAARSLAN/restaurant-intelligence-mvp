@@ -46,11 +46,7 @@ today = pd.Timestamp.today()
 
 upcoming_events = event_df[event_df["Date"] > today].sort_values("Date")
 
-if not upcoming_events.empty:
-    for _, row in upcoming_events.head(10).iterrows():
-        st.markdown(f"**{row['Event_Name']}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
-else:
-    st.info("No upcoming events found after today's date.")
+
 
 # Chatbot Section
 st.subheader("💬 Ask the Assistant")
