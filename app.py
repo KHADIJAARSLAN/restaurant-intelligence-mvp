@@ -21,7 +21,13 @@ filtered_inventory = filtered_inventory.sort_values("Date")
 
 # Plot usage
 st.subheader(f"📊 Usage Trend for {item.title()}")
-st.line_chart(filtered_inventory.set_index("Date")["Used_kg"])
+# Plot with better x-axis formatting
+fig, ax = plt.subplots()
+ax.plot(pd.to_datetime(filtered_inventory['Date']), filtered_inventory['Used_kg'])
+ax.set_xlabel('Date')
+ax.set_ylabel('Used (kg)')
+fig.autofmt_xdate()
+st.pyplot(fig)
 
 # Forecast (Simulated for now)
 st.subheader("🔮 7-Day Forecast")
@@ -80,8 +86,4 @@ if query:
         except Exception as e:
             st.error(f"❌ An unexpected error occurred: {e}")
 
-
-
-
-# Forecast (Simulated for now)
 
