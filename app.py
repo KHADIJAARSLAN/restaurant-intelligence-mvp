@@ -61,7 +61,7 @@ st.dataframe(upcoming_events)
 
 if not upcoming_events.empty:
     for _, row in upcoming_events.head(10).iterrows():
-    event_name = row['Event_Name']
+        event_name = row['Event_Name']
     st.markdown(f"**{event_name}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
 else:
     st.info("No upcoming events found after today's date.")
@@ -86,6 +86,7 @@ if query:
             st.error("⚠️ Rate limit reached. Please try again later or check your OpenAI usage.")
         except Exception as e:
             st.error(f"❌ An unexpected error occurred: {e}")
+
 
 
 
