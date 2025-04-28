@@ -61,7 +61,14 @@ st.dataframe(upcoming_events)
 
 if not upcoming_events.empty:
     for _, row in upcoming_events.head(10).iterrows():
-        st.markdown(f"**{row['Event_Name']}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
+    event_name = row['Event_Name']
+    if 'Berkeley Event 1' in event_name:
+        event_name = 'Berkeley Graduation Day'
+    elif 'Berkeley Event 2' in event_name:
+        event_name = 'Downtown Food Festival'
+    elif 'Berkeley Event 3' in event_name:
+        event_name = 'Cal Football Game Day'
+    st.markdown(f"**{event_name}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
 else:
     st.info("No upcoming events found after today's date.")
 
@@ -85,5 +92,6 @@ if query:
             st.error("⚠️ Rate limit reached. Please try again later or check your OpenAI usage.")
         except Exception as e:
             st.error(f"❌ An unexpected error occurred: {e}")
+
 
 
