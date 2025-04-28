@@ -10,7 +10,7 @@ st.title("🍽️ Restaurant Intelligence Dashboard")
 # Load data
 inventory_df = pd.read_csv("inventory_with_seasonality.csv")
 vendor_df = pd.read_csv("vendors.csv")
-event_df = pd.read_csv("events.csv")
+event_df = pd.read_csv("events (1).csv")
 
 # Sidebar selection
 item = st.sidebar.selectbox("Select an Ingredient", inventory_df["Item"].unique())
@@ -61,14 +61,8 @@ st.dataframe(upcoming_events)
 
 if not upcoming_events.empty:
     for _, row in upcoming_events.head(10).iterrows():
-        event_name = row['Event_Name']
-        if 'Berkeley Event 1' in event_name:
-            event_name = 'Berkeley Graduation Day'
-        elif 'Berkeley Event 2' in event_name:
-            event_name = 'Downtown Food Festival'
-        elif 'Berkeley Event 3' in event_name:
-            event_name = 'Cal Football Game Day'
-        st.markdown(f"**{event_name}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
+    event_name = row['Event_Name']
+    st.markdown(f"**{event_name}** — {row['Date'].date()} *(Impact: {row['Impact_Level']})*")
 else:
     st.info("No upcoming events found after today's date.")
 
