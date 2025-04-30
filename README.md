@@ -17,17 +17,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## 🔐 API Key
-Create a file `.streamlit/secrets.toml` and add your OpenAI key:
-```toml
-OPENAI_API_KEY = "your-openai-key-here"
-```
-
-## 🌐 Deploy on Streamlit Cloud
-1. Push this repo to GitHub.
-2. Go to https://streamlit.io/cloud and connect your GitHub.
-3. Launch the app using `app.py`.
-
 ## 📁 Project Structure
 ```
 restaurant-intelligence-mvp/
